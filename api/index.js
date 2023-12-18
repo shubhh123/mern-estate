@@ -13,6 +13,7 @@ mongoose.connect("mongodb://localhost:27017/estate")
 
 
 const app = express();
+const app2 = express();
 const port = 3000;
 
 // app.get("/test", (req, res)=> {
