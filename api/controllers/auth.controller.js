@@ -12,6 +12,7 @@ export const signup = async(req, res, next)=>{
         await newUser.save(); //code waits here until the user is saved...
         res.status(201).json("User created successfully");
     } catch(err) {
+        //next(errorHandler(550, "Error from function"));
         next(err);
     }
 };
