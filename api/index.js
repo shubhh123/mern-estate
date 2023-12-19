@@ -26,6 +26,22 @@ app.use("/api/user", userRouter);
 
 app.use("/api/user/auth", authRouter)
 
+
+//Middleware for handling errors
+app.use((err, req, res, next) => {
+
+    console.log("Error handled through middleware");
+
+    const statusCode = err.statusCode || 500;
+    const message = err.message || "Internal Server error";
+
+    return res.status(statusCode).json({
+        success: false,
+        statusCode,
+        message,
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });

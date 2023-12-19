@@ -1,7 +1,8 @@
 import User from "../models/user.model.js";
 import bcryptjs from 'bcryptjs';
+import { errorHandler } from "../utils/error.js";
 
-export const signup = async(req, res)=>{
+export const signup = async(req, res, next)=>{
     //console.log(req.body);
 
     const {username, email, password} = req.body;
@@ -10,9 +11,7 @@ export const signup = async(req, res)=>{
     try {
         await newUser.save(); //code waits here until the user is saved...
         res.status(201).json("User created successfully");
-
     } catch(err) {
-        res.status(500).json(err.message);
+        next(err);
     }
-
 };
