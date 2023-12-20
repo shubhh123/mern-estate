@@ -9,7 +9,10 @@ export default function SignUp() {
   const[error, setError] = useState(null);
   const[loading, setloading] = useState(false);
 
+  const[loading2, setloading2] = useState(false);
+  
   const navigate = useNavigate();
+
 
 
   const handleChange = (e) => {
