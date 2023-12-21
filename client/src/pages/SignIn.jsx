@@ -1,18 +1,21 @@
 import React, { useState } from 'react'
 
 import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'; //redux hooks
+
+import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
 
 export default function SignIn() {
 
   const[formData, setFormData] = useState({});
 
-  const[error, setError] = useState(null);
-  const[loading, setloading] = useState(false);
+  // const[error, setError] = useState(null);
+  // const[loading, setloading] = useState(false);
 
-  const[loading2, setloading2] = useState(false);
+  const {loading, error} = useSelector((state) => state.user);
 
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
 
 
   const handleChange = (e) => {
@@ -29,8 +32,8 @@ export default function SignIn() {
       
       try {
         
-        setloading(true);
-  
+        //setloading(true);
+        dispatch(signInStart());
         const res = await fetch("/api/user/auth/signin",
           {
             method: 'POST',
@@ -41,22 +44,30 @@ export default function SignIn() {
           });
           
           const data = await res.json();
-  
+          
+          console.log(data);
+          
           if(data.success === false) {
-            setloading(false);
-            setError(data.message);
-            return;
-          }
-          setloading(false);
-          setError(null);
+            // setloading(false);
+            // setError(data.message);
 
+            dispatch(signInFailure(data.message));
+            return; 
+            // the render method's returned JSX is returned to React, 
+            //which then uses this information to determine how the 
+            //component should be rendered.
+          }
+          // setloading(false);
+          // setError(null);
+          dispatch(signInSuccess(data));
+          
           navigate('/');
           console.log(data);
         } catch(error) {
-          setloading(false);
-          setError(error.message);
+          // setloading(false);
+          // setError(error.message);
+          dispatch(signInFailure(error.message));
       }
-
   }
 
 
