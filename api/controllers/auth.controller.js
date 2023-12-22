@@ -3,6 +3,8 @@ import bcryptjs from 'bcryptjs';
 import { errorHandler } from "../utils/error.js";
 import jwt from 'jsonwebtoken'
 
+
+
 export const signup = async(req, res, next)=>{
     //console.log(req.body);
 
@@ -51,5 +53,52 @@ export const signin = async(req, res, next)=>{
 
     } catch (error) {
         next(error);
+    }
+}
+
+export const google = async(req, res, next) => {
+    try {
+        const user = await User.findOne({email: req.body.email});
+
+        //if the user already in the database... just generate jwt token.
+        if(user) {
+
+            console.log("User is already in the database...");
+
+            const token = jwt.sign({id: user._id}, process.env.JWT_SECRET); 
+            const{password: pass, ...restOfUserInfo} = user._doc;
+            
+            res
+                .cookie('access_token', token, { httpOnly: true })
+                .status(200)
+                .json(restOfUserInfo)
+        } else {
+
+            console.log("Freshly created User using OAuth...");
+
+                //first time user using OAuth
+                const generatedPassword = Math.random().toString(36).slice(-8) 
+                + Math.random().toString(36).slice(-8); //36: includes 0-9 and a-z. -8 indicates last eight characters
+
+                const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+
+                const usernameWithRandomCharacters = req.body.name.split(" ").join("").toLowerCase() +
+                                                     Math.random().toString(36).slice(-8);
+
+                const newUser = new User({username: usernameWithRandomCharacters, email: req.body.email, password: hashedPassword, avatar: req.body.photo});
+
+                await newUser.save();
+
+                const token = jwt.sign({id: newUser._id}, process.env.JWT_SECRET); 
+                const{password: pass, ...restOfUserInfo} = newUser._doc;
+            
+                res
+                    .cookie('access_token', token, { httpOnly: true })
+                    .status(200)
+                    .json(restOfUserInfo)
+        }
+
+    } catch (error) {
+        next(error);    
     }
 }

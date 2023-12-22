@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 
-console.log("From userSlice.js");
+//console.log("From userSlice.js");
 const initialState = {
     currentUser: null,
     error: null,
