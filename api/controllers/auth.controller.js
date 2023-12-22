@@ -21,7 +21,6 @@ export const signup = async(req, res, next)=>{
 };
 
 
-
 export const signin = async(req, res, next)=>{
 
     const {email, password} = req.body;
@@ -88,7 +87,7 @@ export const google = async(req, res, next) => {
                 const newUser = new User({username: usernameWithRandomCharacters, email: req.body.email, password: hashedPassword, avatar: req.body.photo});
 
                 await newUser.save();
-
+                
                 const token = jwt.sign({id: newUser._id}, process.env.JWT_SECRET); 
                 const{password: pass, ...restOfUserInfo} = newUser._doc;
             
