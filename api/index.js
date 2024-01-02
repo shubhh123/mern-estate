@@ -4,6 +4,9 @@ import mongoose from "mongoose";
 import userRouter from './routes/user.routes.js'
 import authRouter from "./routes/auth.route.js";
 import dotenv from 'dotenv'
+
+import cookieParser from "cookie-parser";
+
 dotenv.config();
 
 
@@ -18,9 +21,13 @@ mongoose.connect("mongodb://localhost:27017/estate")
 
 
 const app = express();
-app.use(express.json()) //allows the server to accept JSON data
-const app2 = express();
 const port = 3000;
+
+app.use(cookieParser());
+app.use(express.json()) //allows the server to accept JSON data
+
+
+
 
 // app.get("/test", (req, res)=> {
 //     res.send("Hello to this world");
@@ -29,7 +36,6 @@ const port = 3000;
 app.use("/api/user", userRouter);
 
 app.use("/api/user/auth", authRouter)
-
 
 //Middleware for handling errors
 app.use((err, req, res, next) => {

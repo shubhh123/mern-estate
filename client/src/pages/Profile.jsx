@@ -125,7 +125,7 @@ export default function Profile() {
         <input type="email" placeholder='username' className='border p-3 rounded-lg' value={currentUser.username} id='username'/>
         <input type="text" placeholder='password' className='border p-3 rounded-lg' id='password'/>
       </form>
-
+          
         <button className='rounded-lg bg-slate-500 text-white p-3 my-6 block mx-auto w-full hover:opacity-95 disabled:opacity-80'>Update</button>
         <button className='rounded-lg bg-green-600 text-white p-3 my-3 block mx-auto w-full hover:opacity-95 disabled:opacity-80'>Create Listing</button>
 
