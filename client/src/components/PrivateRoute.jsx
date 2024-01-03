@@ -6,7 +6,6 @@ export default function PrivateRoute() {
 
     const { currentUser } = useSelector((state)=> state.user);
 
-
     //Outlet used to render the child route of the current route
     return currentUser ?<Outlet /> : <Navigate to='/sign-in' />;
 }
