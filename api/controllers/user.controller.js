@@ -29,7 +29,7 @@ export const updateUser = async (req, res, next) => {
                                 // updated document after the update operation. 
                                 //The result, in this case, is stored in the updatedUser variable.
                 ); 
-
+    
             const { password, ...rest } = updatedUser._doc;
             
             res.status(200).json(rest);

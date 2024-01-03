@@ -6,7 +6,8 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/
 import { app } from '../firebase';
 
 import { updateUserStart, updateUserSuccess, updateUserFailure,
-         deleteUserStart, deleteUserSuccess, deleteUserFailure } from '../redux/user/userSlice';
+         deleteUserStart, deleteUserSuccess, deleteUserFailure,
+        signOutUserStart, signOutUserSuccess, signOutUserFailure } from '../redux/user/userSlice';
 
 import { useDispatch } from 'react-redux';
 
@@ -151,6 +152,27 @@ export default function Profile() {
 
   }
 
+  const handleSignout = async()=> {
+    try {
+
+      dispatch(signOutUserStart());
+
+      const res = await fetch("/api/user/auth/signout");
+      const data = await res.json();
+
+      if(data.success === false) {
+        dispatch(signOutUserFailure(data.message));
+        return;
+      }
+
+      dispatch(signOutUserSuccess(data));
+    } catch (error) {
+      dispatch(signOutUserFailure(data.message));
+    }
+
+
+  }
+
   return (
 
 
@@ -202,7 +224,7 @@ export default function Profile() {
 
       <div className='flex justify-between'>
         <button onClick={handleDelete} className=' text-red-600 flex justify-between cursor-pointer'>Delete account</button>
-        <button className=' text-red-600 flex justify-between cursor-pointer'>Sign out</button>
+        <button onClick={handleSignout} className=' text-red-600 flex justify-between cursor-pointer'>Sign out</button>
       </div>
 
       <button className='text-center mx-auto flex my-4 text-green-500'>Show listings</button>
