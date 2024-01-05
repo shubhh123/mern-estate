@@ -3,6 +3,7 @@ import express from "express"
 import mongoose from "mongoose";
 import userRouter from './routes/user.routes.js'
 import authRouter from "./routes/auth.route.js";
+import listingRouter from "./routes/listing.route.js"
 import dotenv from 'dotenv'
 
 import cookieParser from "cookie-parser";
@@ -34,8 +35,8 @@ app.use(express.json()) //allows the server to accept JSON data
 // })
 
 app.use("/api/user", userRouter);
-
 app.use("/api/user/auth", authRouter)
+app.use("/api/listing", listingRouter)
 
 //Middleware for handling errors
 app.use((err, req, res, next) => {

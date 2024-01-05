@@ -154,7 +154,6 @@ export default function Profile() {
 
   const handleSignout = async()=> {
     try {
-
       dispatch(signOutUserStart());
 
       const res = await fetch("/api/user/auth/signout");
@@ -169,14 +168,9 @@ export default function Profile() {
     } catch (error) {
       dispatch(signOutUserFailure(data.message));
     }
-
-
   }
 
   return (
-
-
-
 
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
