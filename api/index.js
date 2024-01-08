@@ -36,7 +36,7 @@ app.use(express.json()) //allows the server to accept JSON data
 
 app.use("/api/user", userRouter);
 app.use("/api/user/auth", authRouter)
-app.use("/api/listing", listingRouter)
+app.use("/api/create-listing", listingRouter)
 
 //Middleware for handling errors
 app.use((err, req, res, next) => {

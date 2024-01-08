@@ -10,7 +10,7 @@ import { updateUserStart, updateUserSuccess, updateUserFailure,
         signOutUserStart, signOutUserSuccess, signOutUserFailure } from '../redux/user/userSlice';
 
 import { useDispatch } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 
 export default function Profile() {
 
@@ -211,7 +211,11 @@ export default function Profile() {
         <input type="password" placeholder='change password' className='border p-3 rounded-lg' id='password' onChange={handleChange}/>
 
         <button disabled={loading} type='submit' className='rounded-lg bg-slate-500 text-white p-3 my-6 block mx-auto w-full hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...': 'Update'}</button>
-        <button className='rounded-lg bg-green-600 text-white p-3 my-3 block mx-auto w-full hover:opacity-95 disabled:opacity-80'>Create Listing</button>
+        {/* <button className='rounded-lg bg-green-600 text-white p-3 my-3 block mx-auto w-full hover:opacity-95 disabled:opacity-80'>Create Listing</button> */}
+          
+        <Link to={"/create-listing"} className='bg-green-700 text-white p-3 rounded-lg text-center hover:opacity-95 mb-6'>
+          Create Listing
+        </Link>
       </form>
           
         
